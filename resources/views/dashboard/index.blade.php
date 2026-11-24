@@ -1008,7 +1008,13 @@ function marineRadar() {
                 tileOpts.attribution = 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, OpenStreetMap';
             }
 
-            this.currentTileLayer = L.tileLayer(tileUrl, tileOpts).addTo(this.map);
+            this.currentTileLayer = L.tileLayer(tileUrl, {
+                ...tileOpts,
+                noWrap : true,
+                bounds : worldBounds,
+                maxNativeZoom: 9,
+                maxZoom: 14,
+            }).addTo(map);
 
             // Handle tile error fallback to Esri
             this.currentTileLayer.on('tileerror', () => {
@@ -1210,6 +1216,9 @@ function marineRadar() {
 .marine-vessel-marker, .marine-origin-port, .marine-dest-port {
     background: transparent !important;
     border: none !important;
+}
+.leaflet-tile-pane {
+    filter: brightness(1.45) contrast(1.15) saturate(1.2);
 }
 </style>
 @endsection
