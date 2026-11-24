@@ -1,0 +1,325 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 980" width="100%" height="100%" style="background-color: #0b1120; font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, sans-serif;">
+  <defs>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0d9488"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#581c87"/>
+    </linearGradient>
+    <linearGradient id="warnGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrowDown" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 2 1 L 8 5 L 2 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowRight" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 1 2 L 9 5 L 1 8 z" fill="#2dd4bf" />
+    </marker>
+  </defs>
+
+  <!-- Background Grid -->
+  <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+    <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="0.7"/>
+  </pattern>
+  <rect width="1400" height="980" fill="url(#grid)" />
+
+  <!-- Top Title Banner -->
+  <rect x="30" y="20" width="1340" height="64" rx="10" fill="#111827" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="55" y="48" fill="#f8fafc" font-size="20" font-weight="700" letter-spacing="0.5">CORRIDEX — 5-LAYER SYSTEM ARCHITECTURE</text>
+  <text x="55" y="70" fill="#94a3b8" font-size="13">Domain-Driven Service Decoupling • Multi-Corridor SLA Engine • Laravel 12 &amp; MySQL 8 &amp; Open-Meteo API</text>
+  <rect x="1150" y="34" width="195" height="36" rx="6" fill="#0f172a" stroke="#0284c7" stroke-width="1"/>
+  <text x="1247" y="57" fill="#38bdf8" font-size="12" font-weight="600" text-anchor="middle">PORTFOLIO ARCHITECTURE</text>
+
+  <!-- ==================== LEFT COLUMN: 5-LAYER ARCHITECTURE ==================== -->
+
+  <!-- LAYER 1: CLIENT / UI LAYER -->
+  <g transform="translate(30, 105)" filter="url(#shadow)">
+    <rect width="860" height="125" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+    <rect width="860" height="34" rx="8" fill="url(#coreGrad)"/>
+    <text x="16" y="22" fill="#ffffff" font-size="13" font-weight="700">1. PRESENTATION &amp; CLIENT UI LAYER</text>
+    <text x="844" y="22" fill="#e0f2fe" font-size="11" text-anchor="end">Blade • Tailwind CSS • Leaflet.js • Chart.js</text>
+    
+    <g transform="translate(15, 45)">
+      <!-- Box 1 -->
+      <rect width="265" height="68" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="12" y="22" fill="#38bdf8" font-size="12" font-weight="700">Dual-Theme Blade Views</text>
+      <text x="12" y="40" fill="#cbd5e1" font-size="11">FOUC-safe dark/light mode toggle</text>
+      <text x="12" y="56" fill="#64748b" font-size="10">Operational dashboard &amp; directory</text>
+
+      <!-- Box 2 -->
+      <rect x="280" width="270" height="68" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="292" y="22" fill="#2dd4bf" font-size="12" font-weight="700">Leaflet.js Geovisualization</text>
+      <text x="292" y="40" fill="#cbd5e1" font-size="11">Interactive maritime waypoint maps</text>
+      <text x="292" y="56" fill="#64748b" font-size="10">Polyline routes &amp; active port pins</text>
+
+      <!-- Box 3 -->
+      <rect x="565" width="265" height="68" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="577" y="22" fill="#f59e0b" font-size="12" font-weight="700">Chart.js Analytics &amp; KPIs</text>
+      <text x="577" y="40" fill="#cbd5e1" font-size="11">Lifecycle distribution &amp; carrier volume</text>
+      <text x="577" y="56" fill="#64748b" font-size="10">Corridor SLA compliance gauges</text>
+    </g>
+  </g>
+
+  <!-- Connector Line 1 -> 2 -->
+  <path d="M 460 230 L 460 252" stroke="#38bdf8" stroke-width="2" fill="none" marker-end="url(#arrowDown)"/>
+  <text x="475" y="246" fill="#94a3b8" font-size="10" font-family="Consolas, monospace">HTTP Requests / JSON API Calls / Session Cookies</text>
+
+  <!-- LAYER 2: SECURITY & RBAC MIDDLEWARE -->
+  <g transform="translate(30, 255)" filter="url(#shadow)">
+    <rect width="860" height="105" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="1.5"/>
+    <rect width="860" height="32" rx="8" fill="url(#purpleGrad)"/>
+    <text x="16" y="21" fill="#ffffff" font-size="13" font-weight="700">2. SECURITY, TRAFFIC &amp; RBAC MIDDLEWARE</text>
+    <text x="844" y="21" fill="#f3e8ff" font-size="11" text-anchor="end">Zero-Trust Boundaries • Policy Isolation</text>
+
+    <g transform="translate(15, 42)">
+      <rect width="265" height="52" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="12" y="20" fill="#c084fc" font-size="11" font-weight="700">Laravel 12 HTTP Pipeline</text>
+      <text x="12" y="38" fill="#94a3b8" font-size="10">Routing, Rate Limiting, CSRF verification</text>
+
+      <rect x="280" width="270" height="52" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="292" y="20" fill="#c084fc" font-size="11" font-weight="700">Auth &amp; Sanctum Guards</text>
+      <text x="292" y="38" fill="#94a3b8" font-size="10">Stateful web session &amp; Bearer tokens</text>
+
+      <rect x="565" width="265" height="52" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="577" y="20" fill="#c084fc" font-size="11" font-weight="700">RoleMiddleware &amp; Tenant Scope</text>
+      <text x="577" y="38" fill="#94a3b8" font-size="10">Role gates (admin, operator, customer)</text>
+    </g>
+  </g>
+
+  <!-- Connector Line 2 -> 3 -->
+  <path d="M 460 360 L 460 382" stroke="#38bdf8" stroke-width="2" fill="none" marker-end="url(#arrowDown)"/>
+  <text x="475" y="375" fill="#94a3b8" font-size="10" font-family="Consolas, monospace">Sanitized &amp; Authenticated Request Context</text>
+
+  <!-- LAYER 3: THIN CONTROLLER LAYER -->
+  <g transform="translate(30, 385)" filter="url(#shadow)">
+    <rect width="860" height="105" rx="8" fill="#1e293b" stroke="#0d9488" stroke-width="1.5"/>
+    <rect width="860" height="32" rx="8" fill="url(#accentGrad)"/>
+    <text x="16" y="21" fill="#ffffff" font-size="13" font-weight="700">3. THIN CONTROLLERS &amp; REQUEST VALIDATION</text>
+    <text x="844" y="21" fill="#ccfbf1" font-size="11" text-anchor="end">No Business Logic • FormRequest Validation</text>
+
+    <g transform="translate(15, 42)">
+      <rect width="265" height="52" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="12" y="20" fill="#2dd4bf" font-size="11" font-weight="700">Web Controllers</text>
+      <text x="12" y="38" fill="#94a3b8" font-size="10">Shipment, Dashboard, Notification, Audit</text>
+
+      <rect x="280" width="270" height="52" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="292" y="20" fill="#2dd4bf" font-size="11" font-weight="700">API Controllers</text>
+      <text x="292" y="38" fill="#94a3b8" font-size="10">ShipmentApiController (JSON/REST)</text>
+
+      <rect x="565" width="265" height="52" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="577" y="20" fill="#2dd4bf" font-size="11" font-weight="700">Form Requests</text>
+      <text x="577" y="38" fill="#94a3b8" font-size="10">StoreShipment, Tracking, Exception Requests</text>
+    </g>
+  </g>
+
+  <!-- Connector Line 3 -> 4 -->
+  <path d="M 460 490 L 460 512" stroke="#38bdf8" stroke-width="2" fill="none" marker-end="url(#arrowDown)"/>
+  <text x="475" y="505" fill="#94a3b8" font-size="10" font-family="Consolas, monospace">Validated Parameters &amp; Domain DTOs</text>
+
+  <!-- LAYER 4: DOMAIN SERVICE LAYER -->
+  <g transform="translate(30, 515)" filter="url(#shadow)">
+    <rect width="860" height="235" rx="8" fill="#0f172a" stroke="#0284c7" stroke-width="2"/>
+    <rect width="860" height="34" rx="8" fill="url(#coreGrad)"/>
+    <text x="16" y="22" fill="#ffffff" font-size="13" font-weight="700">4. DOMAIN SERVICE LAYER (PURE BUSINESS LOGIC)</text>
+    <text x="844" y="22" fill="#e0f2fe" font-size="11" text-anchor="end">Deterministic Calculations &amp; State Invariants</text>
+
+    <g transform="translate(15, 45)">
+      <!-- EtaService -->
+      <g transform="translate(0, 0)">
+        <rect width="405" height="80" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+        <text x="12" y="20" fill="#38bdf8" font-size="12" font-weight="700">EtaService</text>
+        <text x="12" y="38" fill="#cbd5e1" font-size="11">• Calculates delay_hours = ceil(max(0, ETA - Expected))</text>
+        <text x="12" y="54" fill="#cbd5e1" font-size="11">• Maps severity bands: NONE, LOW, MEDIUM, HIGH</text>
+        <text x="12" y="70" fill="#94a3b8" font-size="10">• Triggers corridor SLA breach: is_sla_breached = true</text>
+      </g>
+
+      <!-- ShipmentService -->
+      <g transform="translate(425, 0)">
+        <rect width="405" height="80" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+        <text x="12" y="20" fill="#38bdf8" font-size="12" font-weight="700">ShipmentService</text>
+        <text x="12" y="38" fill="#cbd5e1" font-size="11">• DB::transaction isolation for atomic booking</text>
+        <text x="12" y="54" fill="#cbd5e1" font-size="11">• Generates code TRC-2026-GLOBAL-XXX</text>
+        <text x="12" y="70" fill="#94a3b8" font-size="10">• Manifest items creation &amp; audit logging</text>
+      </g>
+
+      <!-- TrackingService -->
+      <g transform="translate(0, 92)">
+        <rect width="265" height="84" rx="6" fill="#1e293b" stroke="#2dd4bf" stroke-width="1"/>
+        <text x="10" y="20" fill="#2dd4bf" font-size="11" font-weight="700">TrackingService</text>
+        <text x="10" y="36" fill="#cbd5e1" font-size="10">• Append-only milestones</text>
+        <text x="10" y="50" fill="#cbd5e1" font-size="10">• Validates occurred_at monotonicity</text>
+        <text x="10" y="64" fill="#cbd5e1" font-size="10">• State machine progression</text>
+        <text x="10" y="78" fill="#94a3b8" font-size="9">• Dispatches user alerts</text>
+      </g>
+
+      <!-- ExceptionService -->
+      <g transform="translate(280, 92)">
+        <rect width="270" height="84" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+        <text x="10" y="20" fill="#f59e0b" font-size="11" font-weight="700">ExceptionService</text>
+        <text x="10" y="36" fill="#cbd5e1" font-size="10">• OPEN → INVESTIGATING → RESOLVED</text>
+        <text x="10" y="50" fill="#cbd5e1" font-size="10">• Tracks detected_at &amp; resolved_at</text>
+        <text x="10" y="64" fill="#cbd5e1" font-size="10">• Mean Time to Resolution (MTTR)</text>
+        <text x="10" y="78" fill="#94a3b8" font-size="9">• Consignee hold notifications</text>
+      </g>
+
+      <!-- ExternalWeatherService -->
+      <g transform="translate(565, 92)">
+        <rect width="265" height="84" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+        <text x="10" y="20" fill="#38bdf8" font-size="11" font-weight="700">ExternalWeatherService</text>
+        <text x="10" y="36" fill="#cbd5e1" font-size="10">• Open-Meteo HTTP client</text>
+        <text x="10" y="50" fill="#cbd5e1" font-size="10">• 5-second resilient timeout</text>
+        <text x="10" y="64" fill="#cbd5e1" font-size="10">• Live hub coordinates query</text>
+        <text x="10" y="78" fill="#94a3b8" font-size="9">• Graceful local fallback</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Connector Line 4 -> 5 -->
+  <path d="M 460 750 L 460 772" stroke="#38bdf8" stroke-width="2" fill="none" marker-end="url(#arrowDown)"/>
+  <text x="475" y="765" fill="#94a3b8" font-size="10" font-family="Consolas, monospace">Database Transactions &amp; Weather API Calls</text>
+
+  <!-- LAYER 5: PERSISTENCE & INTEGRATIONS -->
+  <g transform="translate(30, 775)" filter="url(#shadow)">
+    <rect width="860" height="180" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+    <rect width="860" height="32" rx="8" fill="url(#headerGrad)"/>
+    <text x="16" y="21" fill="#f8fafc" font-size="13" font-weight="700">5. PERSISTENCE &amp; EXTERNAL INTEGRATION LAYER</text>
+    <text x="844" y="21" fill="#94a3b8" font-size="11" text-anchor="end">ACID Relational Storage &amp; Live Weather Telemetry</text>
+
+    <g transform="translate(15, 42)">
+      <!-- MySQL 8 Storage -->
+      <rect width="405" height="122" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="12" y="22" fill="#38bdf8" font-size="12" font-weight="700">MySQL 8.0+ Relational Database (InnoDB)</text>
+      <text x="12" y="42" fill="#cbd5e1" font-size="11">9 Tables: users, carriers, locations, shipments,</text>
+      <text x="12" y="58" fill="#cbd5e1" font-size="11">shipment_items, tracking_events, shipment_exceptions,</text>
+      <text x="12" y="74" fill="#cbd5e1" font-size="11">notifications, audit_logs</text>
+      <text x="12" y="94" fill="#94a3b8" font-size="10">• FK cascades &amp; referential integrity</text>
+      <text x="12" y="110" fill="#94a3b8" font-size="10">• Compound indexes on (customer_id, current_status, occurred_at)</text>
+
+      <!-- External API & Audit -->
+      <rect x="425" width="405" height="122" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="437" y="22" fill="#2dd4bf" font-size="12" font-weight="700">Open-Meteo API &amp; Security Audit Trail</text>
+      <text x="437" y="42" fill="#cbd5e1" font-size="11">Open-Meteo REST: Marine/Hub Weather</text>
+      <text x="437" y="58" fill="#94a3b8" font-size="10">• Query parameters: latitude, longitude, current weather</text>
+      <text x="437" y="74" fill="#cbd5e1" font-size="11">Audit Trail Store: Immutable Event Log</text>
+      <text x="437" y="94" fill="#94a3b8" font-size="10">• Captures actor user_id, action, entity_type, entity_id</text>
+      <text x="437" y="110" fill="#94a3b8" font-size="10">• JSON snapshots of old_values vs new_values with client IP</text>
+    </g>
+  </g>
+
+  <!-- ==================== RIGHT COLUMN: 3 GLOBAL TRADE CORRIDORS ==================== -->
+
+  <!-- Corridors Section Header Banner -->
+  <g transform="translate(915, 105)" filter="url(#shadow)">
+    <rect width="455" height="42" rx="8" fill="url(#accentGrad)" stroke="#14b8a6" stroke-width="1.5"/>
+    <text x="16" y="26" fill="#ffffff" font-size="13" font-weight="700">GLOBAL TRADE CORRIDORS &amp; SLA MATRIX</text>
+    <text x="439" y="26" fill="#ccfbf1" font-size="11" font-weight="600" text-anchor="end">DETERMINISTIC ENGINE</text>
+  </g>
+
+  <!-- CORRIDOR 1: SEA -> EU (12h SLA) -->
+  <g transform="translate(915, 160)" filter="url(#shadow)">
+    <rect width="455" height="190" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+    <rect width="455" height="32" rx="8" fill="url(#emeraldGrad)"/>
+    <text x="14" y="21" fill="#ffffff" font-size="12" font-weight="700">CORRIDOR 1: SEA → EU (12h SLA THRESHOLD)</text>
+    <text x="441" y="21" fill="#d1fae5" font-size="11" text-anchor="end">SLA Target: 12 Hours</text>
+
+    <g font-size="11" fill="#cbd5e1" transform="translate(14, 48)">
+      <text x="0" y="12"><tspan fill="#34d399" font-weight="700">Origin / Dest:</tspan> Singapore (SGSIN) → Rotterdam (NLRTM)</text>
+      <text x="0" y="30"><tspan fill="#34d399" font-weight="700">Transit Mode:</tspan> Deep-sea containerized maritime route</text>
+      <text x="0" y="48"><tspan fill="#34d399" font-weight="700">Cargo Type:</tspan> Electronics, Industrial Equipment</text>
+      <text x="0" y="66"><tspan fill="#34d399" font-weight="700">SLA Evaluation:</tspan> Breach triggered when delay &gt; 12 hours</text>
+      <text x="0" y="84"><tspan fill="#34d399" font-weight="700">Key Corridor KPI:</tspan> On-Time Delivery Compliance Rate (%)</text>
+      
+      <rect y="98" width="427" height="32" rx="5" fill="#0f172a" stroke="#059669" stroke-width="1"/>
+      <text x="10" y="119" fill="#6ee7b7" font-size="10" font-family="Consolas, monospace">delay_hours &gt; 12 ? (is_sla_breached = 1, severity = HIGH) : OK</text>
+    </g>
+  </g>
+
+  <!-- CORRIDOR 2: ASIA -> NA (18h SLA) -->
+  <g transform="translate(915, 365)" filter="url(#shadow)">
+    <rect width="455" height="190" rx="8" fill="#1e293b" stroke="#0284c7" stroke-width="1.5"/>
+    <rect width="455" height="32" rx="8" fill="url(#coreGrad)"/>
+    <text x="14" y="21" fill="#ffffff" font-size="12" font-weight="700">CORRIDOR 2: ASIA → NA (18h SLA THRESHOLD)</text>
+    <text x="441" y="21" fill="#e0f2fe" font-size="11" text-anchor="end">SLA Target: 18 Hours</text>
+
+    <g font-size="11" fill="#cbd5e1" transform="translate(14, 48)">
+      <text x="0" y="12"><tspan fill="#38bdf8" font-weight="700">Origin / Dest:</tspan> Shanghai (CNSHA) → Los Angeles (USLAX)</text>
+      <text x="0" y="30"><tspan fill="#38bdf8" font-weight="700">Transit Mode:</tspan> Transpacific high-volume container freight</text>
+      <text x="0" y="48"><tspan fill="#38bdf8" font-weight="700">Cargo Type:</tspan> Consumer Electronics, Automotive Parts</text>
+      <text x="0" y="66"><tspan fill="#38bdf8" font-weight="700">SLA Evaluation:</tspan> Breach triggered when delay &gt; 18 hours</text>
+      <text x="0" y="84"><tspan fill="#38bdf8" font-weight="700">Key Corridor KPI:</tspan> Average Delay Duration (Hours)</text>
+      
+      <rect y="98" width="427" height="32" rx="5" fill="#0f172a" stroke="#0284c7" stroke-width="1"/>
+      <text x="10" y="119" fill="#7dd3fc" font-size="10" font-family="Consolas, monospace">delay_hours &gt; 18 ? (is_sla_breached = 1, severity = HIGH) : OK</text>
+    </g>
+  </g>
+
+  <!-- CORRIDOR 3: SEA -> AU (24h SLA) -->
+  <g transform="translate(915, 570)" filter="url(#shadow)">
+    <rect width="455" height="190" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect width="455" height="32" rx="8" fill="url(#purpleGrad)"/>
+    <text x="14" y="21" fill="#ffffff" font-size="12" font-weight="700">CORRIDOR 3: SEA → AU (24h SLA THRESHOLD)</text>
+    <text x="441" y="21" fill="#ede9fe" font-size="11" text-anchor="end">SLA Target: 24 Hours</text>
+
+    <g font-size="11" fill="#cbd5e1" transform="translate(14, 48)">
+      <text x="0" y="12"><tspan fill="#a78bfa" font-weight="700">Origin / Dest:</tspan> Singapore (SGSIN) → Sydney (AUSYD)</text>
+      <text x="0" y="30"><tspan fill="#a78bfa" font-weight="700">Transit Mode:</tspan> Regional maritime &amp; perishable cold chain</text>
+      <text x="0" y="48"><tspan fill="#a78bfa" font-weight="700">Cargo Type:</tspan> Perishable Agri-Goods, Raw Materials</text>
+      <text x="0" y="66"><tspan fill="#a78bfa" font-weight="700">SLA Evaluation:</tspan> Breach triggered when delay &gt; 24 hours</text>
+      <text x="0" y="84"><tspan fill="#a78bfa" font-weight="700">Key Corridor KPI:</tspan> Avg Exception Resolution Time (MTTR)</text>
+      
+      <rect y="98" width="427" height="32" rx="5" fill="#0f172a" stroke="#8b5cf6" stroke-width="1"/>
+      <text x="10" y="119" fill="#c4b5fd" font-size="10" font-family="Consolas, monospace">delay_hours &gt; 24 ? (is_sla_breached = 1, severity = HIGH) : OK</text>
+    </g>
+  </g>
+
+  <!-- SLA SEVERITY SCALE TABLE -->
+  <g transform="translate(915, 775)" filter="url(#shadow)">
+    <rect width="455" height="180" rx="8" fill="#1e293b" stroke="#d97706" stroke-width="1.5"/>
+    <rect width="455" height="32" rx="8" fill="url(#warnGrad)"/>
+    <text x="14" y="21" fill="#ffffff" font-size="12" font-weight="700">DETERMINISTIC SLA SEVERITY CLASSIFICATION</text>
+    <text x="441" y="21" fill="#fef3c7" font-size="11" text-anchor="end">Mathematical Engine</text>
+
+    <g transform="translate(14, 42)">
+      <!-- Row 1: NONE -->
+      <rect width="427" height="26" rx="4" fill="#0f172a"/>
+      <text x="10" y="18" fill="#10b981" font-size="11" font-weight="700">NONE (0 hrs)</text>
+      <text x="140" y="18" fill="#cbd5e1" font-size="11">Vessel ETA &lt;= expected arrival (On Schedule)</text>
+
+      <!-- Row 2: LOW -->
+      <rect y="31" width="427" height="26" rx="4" fill="#0f172a"/>
+      <text x="10" y="49" fill="#38bdf8" font-size="11" font-weight="700">LOW (1 - 12 hrs)</text>
+      <text x="140" y="49" fill="#cbd5e1" font-size="11">Minor berthing delay / normal customs queue</text>
+
+      <!-- Row 3: MEDIUM -->
+      <rect y="62" width="427" height="26" rx="4" fill="#0f172a"/>
+      <text x="10" y="80" fill="#f59e0b" font-size="11" font-weight="700">MEDIUM (13 - 24 hrs)</text>
+      <text x="140" y="80" fill="#cbd5e1" font-size="11">Port congestion / moderate weather incident</text>
+
+      <!-- Row 4: HIGH -->
+      <rect y="93" width="427" height="26" rx="4" fill="#0f172a"/>
+      <text x="10" y="111" fill="#ef4444" font-size="11" font-weight="700">HIGH (&gt; 24 hrs / SLA)</text>
+      <text x="140" y="111" fill="#fca5a5" font-size="11">Delay &gt; 24h OR exceeds Corridor SLA threshold</text>
+    </g>
+  </g>
+
+  <!-- Cross-Layer Connection: EtaService to Corridor SLA Engine -->
+  <path d="M 890 560 L 910 560" stroke="#2dd4bf" stroke-width="2" fill="none" marker-end="url(#arrowRight)"/>
+</svg>

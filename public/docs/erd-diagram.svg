@@ -1,0 +1,368 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350 980" width="100%" height="100%" style="background-color: #0b0f17; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#60a5fa" />
+    </marker>
+    <linearGradient id="shipmentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#172554" />
+    </linearGradient>
+  </defs>
+
+  <!-- Title & Metadata -->
+  <text x="40" y="42" fill="#ffffff" font-size="20" font-weight="800" letter-spacing="1">CARGOTRACE &#8226; RELATIONAL DATABASE SCHEMA</text>
+  <text x="40" y="64" fill="#94a3b8" font-size="12">Enterprise Global Shipment Visibility &#8226; 9 Core Relational Tables &#8226; MySQL 8.0+ / InnoDB Engine</text>
+
+  <!-- Legend -->
+  <g transform="translate(970, 25)">
+    <rect width="340" height="42" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <rect x="15" y="15" width="12" height="12" rx="2" fill="#38bdf8"/>
+    <text x="32" y="25" fill="#cbd5e1" font-size="11">Primary Key (PK)</text>
+    <rect x="135" y="15" width="12" height="12" rx="2" fill="#f59e0b"/>
+    <text x="152" y="25" fill="#cbd5e1" font-size="11">Foreign Key (FK)</text>
+    <rect x="250" y="15" width="12" height="12" rx="2" fill="#10b981"/>
+    <text x="267" y="25" fill="#cbd5e1" font-size="11">Indexed (IDX)</text>
+  </g>
+
+  <!-- RELATIONSHIP CONNECTING PATHS -->
+  <!-- users -> shipments (customer_id) -->
+  <path d="M 180 280 L 180 360 L 480 360" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+  <!-- carriers -> shipments (carrier_id) -->
+  <path d="M 340 430 L 480 430" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- locations -> shipments (origin/destination) -->
+  <path d="M 890 420 L 820 420" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- shipments -> shipment_items (shipment_id) -->
+  <path d="M 480 580 L 340 580" fill="none" stroke="#60a5fa" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- shipments -> tracking_events (shipment_id) -->
+  <path d="M 820 540 L 890 540" fill="none" stroke="#60a5fa" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- shipments -> shipment_exceptions (shipment_id) -->
+  <path d="M 650 790 L 650 815" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- users -> notifications (user_id) -->
+  <path d="M 340 180 L 480 180" fill="none" stroke="#a855f7" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- users -> audit_logs (user_id) -->
+  <path d="M 280 90 L 280 75 L 890 75 L 890 120" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow)"/>
+
+  <!-- ==================== TABLE: USERS ==================== -->
+  <g transform="translate(40, 90)" filter="url(#glow)">
+    <rect width="300" height="190" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <path d="M 0 0 L 300 0 L 300 32 L 0 32 Z" fill="#1e293b" rx="8" />
+    <rect x="0" y="24" width="300" height="8" fill="#1e293b"/>
+    <text x="14" y="21" fill="#f8fafc" font-size="12" font-weight="bold">users</text>
+    <text x="235" y="21" fill="#94a3b8" font-size="10" font-mono="true">Core Auth</text>
+    <line x1="0" y1="32" x2="300" y2="32" stroke="#475569" stroke-width="1"/>
+
+    <text x="14" y="54" fill="#38bdf8" font-size="10" font-weight="bold">PK</text>
+    <text x="40" y="54" fill="#e2e8f0" font-size="11" font-weight="600">id</text>
+    <text x="190" y="54" fill="#94a3b8" font-size="11">BIGINT UNSIGNED</text>
+
+    <text x="40" y="76" fill="#e2e8f0" font-size="11">name</text>
+    <text x="190" y="76" fill="#94a3b8" font-size="11">VARCHAR(255)</text>
+
+    <text x="14" y="98" fill="#10b981" font-size="10" font-weight="bold">UQ</text>
+    <text x="40" y="98" fill="#e2e8f0" font-size="11">email</text>
+    <text x="190" y="98" fill="#94a3b8" font-size="11">VARCHAR(255)</text>
+
+    <text x="40" y="120" fill="#e2e8f0" font-size="11">password</text>
+    <text x="190" y="120" fill="#94a3b8" font-size="11">VARCHAR(255)</text>
+
+    <text x="40" y="142" fill="#e2e8f0" font-size="11" font-weight="bold">role</text>
+    <text x="190" y="142" fill="#fbbf24" font-size="11">ENUM(adm,opr,cst)</text>
+
+    <text x="40" y="164" fill="#64748b" font-size="10">created_at, updated_at</text>
+    <text x="190" y="164" fill="#64748b" font-size="10">TIMESTAMP</text>
+  </g>
+
+  <!-- ==================== TABLE: CARRIERS ==================== -->
+  <g transform="translate(40, 310)" filter="url(#glow)">
+    <rect width="300" height="180" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <path d="M 0 0 L 300 0 L 300 32 L 0 32 Z" fill="#1e293b" rx="8" />
+    <rect x="0" y="24" width="300" height="8" fill="#1e293b"/>
+    <text x="14" y="21" fill="#f8fafc" font-size="12" font-weight="bold">carriers</text>
+    <text x="215" y="21" fill="#94a3b8" font-size="10" font-mono="true">Logistics Ops</text>
+    <line x1="0" y1="32" x2="300" y2="32" stroke="#475569" stroke-width="1"/>
+
+    <text x="14" y="54" fill="#38bdf8" font-size="10" font-weight="bold">PK</text>
+    <text x="40" y="54" fill="#e2e8f0" font-size="11" font-weight="600">id</text>
+    <text x="190" y="54" fill="#94a3b8" font-size="11">BIGINT UNSIGNED</text>
+
+    <text x="14" y="76" fill="#10b981" font-size="10" font-weight="bold">UQ</text>
+    <text x="40" y="76" fill="#e2e8f0" font-size="11">code</text>
+    <text x="190" y="76" fill="#94a3b8" font-size="11">VARCHAR(20)</text>
+
+    <text x="40" y="98" fill="#e2e8f0" font-size="11">name</text>
+    <text x="190" y="98" fill="#94a3b8" font-size="11">VARCHAR(120)</text>
+
+    <text x="40" y="120" fill="#e2e8f0" font-size="11">transport_mode</text>
+    <text x="190" y="120" fill="#fbbf24" font-size="11">ENUM(SEA,AIR..)</text>
+
+    <text x="14" y="142" fill="#10b981" font-size="10" font-weight="bold">IDX</text>
+    <text x="40" y="142" fill="#e2e8f0" font-size="11">is_active</text>
+    <text x="190" y="142" fill="#94a3b8" font-size="11">TINYINT(1)</text>
+
+    <text x="40" y="164" fill="#64748b" font-size="10">created_at, updated_at</text>
+    <text x="190" y="164" fill="#64748b" font-size="10">TIMESTAMP</text>
+  </g>
+
+  <!-- ==================== TABLE: SHIPMENT_ITEMS ==================== -->
+  <g transform="translate(40, 520)" filter="url(#glow)">
+    <rect width="300" height="190" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <path d="M 0 0 L 300 0 L 300 32 L 0 32 Z" fill="#1e293b" rx="8" />
+    <rect x="0" y="24" width="300" height="8" fill="#1e293b"/>
+    <text x="14" y="21" fill="#f8fafc" font-size="12" font-weight="bold">shipment_items</text>
+    <text x="215" y="21" fill="#94a3b8" font-size="10" font-mono="true">Manifest Line</text>
+    <line x1="0" y1="32" x2="300" y2="32" stroke="#475569" stroke-width="1"/>
+
+    <text x="14" y="54" fill="#38bdf8" font-size="10" font-weight="bold">PK</text>
+    <text x="40" y="54" fill="#e2e8f0" font-size="11" font-weight="600">id</text>
+    <text x="190" y="54" fill="#94a3b8" font-size="11">BIGINT UNSIGNED</text>
+
+    <text x="14" y="76" fill="#f59e0b" font-size="10" font-weight="bold">FK</text>
+    <text x="40" y="76" fill="#e2e8f0" font-size="11">shipment_id</text>
+    <text x="190" y="76" fill="#94a3b8" font-size="11">BIGINT [CASCADE]</text>
+
+    <text x="40" y="98" fill="#e2e8f0" font-size="11">sku</text>
+    <text x="190" y="98" fill="#94a3b8" font-size="11">VARCHAR(60)</text>
+
+    <text x="40" y="120" fill="#e2e8f0" font-size="11">item_name</text>
+    <text x="190" y="120" fill="#94a3b8" font-size="11">VARCHAR(150)</text>
+
+    <text x="40" y="142" fill="#e2e8f0" font-size="11">quantity, weight_kg</text>
+    <text x="190" y="142" fill="#94a3b8" font-size="11">INT, DECIMAL(12,2)</text>
+
+    <text x="40" y="164" fill="#e2e8f0" font-size="11">volume_cbm</text>
+    <text x="190" y="164" fill="#94a3b8" font-size="11">DECIMAL(12,2)</text>
+  </g>
+
+  <!-- ==================== TABLE: SHIPMENTS (CENTRAL HUB) ==================== -->
+  <g transform="translate(480, 260)" filter="url(#glow)">
+    <rect width="340" height="530" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+    <path d="M 0 0 L 340 0 L 340 34 L 0 34 Z" fill="url(#shipmentGrad)" rx="8" />
+    <rect x="0" y="24" width="340" height="10" fill="#172554"/>
+    <text x="16" y="23" fill="#ffffff" font-size="13" font-weight="bold">shipments</text>
+    <text x="215" y="22" fill="#93c5fd" font-size="10" font-mono="true">Central Consignment</text>
+    <line x1="0" y1="34" x2="340" y2="34" stroke="#3b82f6" stroke-width="1.5"/>
+
+    <text x="14" y="58" fill="#38bdf8" font-size="10" font-weight="bold">PK</text>
+    <text x="40" y="58" fill="#ffffff" font-size="11" font-weight="bold">id</text>
+    <text x="220" y="58" fill="#94a3b8" font-size="11">BIGINT UNSIGNED</text>
+
+    <text x="14" y="80" fill="#10b981" font-size="10" font-weight="bold">UQ</text>
+    <text x="40" y="80" fill="#ffffff" font-size="11" font-weight="bold">shipment_number</text>
+    <text x="220" y="80" fill="#94a3b8" font-size="11">VARCHAR(40)</text>
+
+    <text x="14" y="102" fill="#f59e0b" font-size="10" font-weight="bold">FK</text>
+    <text x="40" y="102" fill="#e2e8f0" font-size="11">customer_id</text>
+    <text x="220" y="102" fill="#94a3b8" font-size="11">users(id) [RESTRICT]</text>
+
+    <text x="14" y="124" fill="#f59e0b" font-size="10" font-weight="bold">FK</text>
+    <text x="40" y="124" fill="#e2e8f0" font-size="11">carrier_id</text>
+    <text x="220" y="124" fill="#94a3b8" font-size="11">carriers(id)</text>
+
+    <text x="14" y="146" fill="#f59e0b" font-size="10" font-weight="bold">FK</text>
+    <text x="40" y="146" fill="#e2e8f0" font-size="11">origin_location_id</text>
+    <text x="220" y="146" fill="#94a3b8" font-size="11">locations(id)</text>
+
+    <text x="14" y="168" fill="#f59e0b" font-size="10" font-weight="bold">FK</text>
+    <text x="40" y="168" fill="#e2e8f0" font-size="11">destination_location_id</text>
+    <text x="220" y="168" fill="#94a3b8" font-size="11">locations(id)</text>
+
+    <text x="14" y="190" fill="#f59e0b" font-size="10" font-weight="bold">FK</text>
+    <text x="40" y="190" fill="#e2e8f0" font-size="11">current_location_id</text>
+    <text x="220" y="190" fill="#94a3b8" font-size="11">locations(id) [NULL]</text>
+
+    <text x="40" y="212" fill="#e2e8f0" font-size="11">cargo_type</text>
+    <text x="220" y="212" fill="#94a3b8" font-size="11">VARCHAR(150)</text>
+
+    <text x="40" y="234" fill="#e2e8f0" font-size="11">total_weight_kg</text>
+    <text x="220" y="234" fill="#94a3b8" font-size="11">DECIMAL(12,2)</text>
+
+    <text x="40" y="256" fill="#e2e8f0" font-size="11">total_volume_cbm</text>
+    <text x="220" y="256" fill="#94a3b8" font-size="11">DECIMAL(12,2)</text>
+
+    <text x="40" y="278" fill="#e2e8f0" font-size="11">expected_departure</text>
+    <text x="220" y="278" fill="#94a3b8" font-size="11">DATETIME</text>
+
+    <text x="40" y="300" fill="#e2e8f0" font-size="11">expected_arrival</text>
+    <text x="220" y="300" fill="#94a3b8" font-size="11">DATETIME [SLA BASE]</text>
+
+    <text x="40" y="322" fill="#e2e8f0" font-size="11">estimated_arrival</text>
+    <text x="220" y="322" fill="#94a3b8" font-size="11">DATETIME [DYNAMIC]</text>
+
+    <text x="14" y="344" fill="#10b981" font-size="10" font-weight="bold">IDX</text>
+    <text x="40" y="344" fill="#e2e8f0" font-size="11" font-weight="bold">current_status</text>
+    <text x="220" y="344" fill="#fbbf24" font-size="11">ENUM(5 States)</text>
+
+    <text x="14" y="366" fill="#10b981" font-size="10" font-weight="bold">IDX</text>
+    <text x="40" y="366" fill="#e2e8f0" font-size="11">is_delayed</text>
+    <text x="220" y="366" fill="#94a3b8" font-size="11">TINYINT(1)</text>
+
+    <text x="40" y="388" fill="#e2e8f0" font-size="11">delay_hours</text>
+    <text x="220" y="388" fill="#94a3b8" font-size="11">INT UNSIGNED</text>
+
+    <text x="40" y="410" fill="#e2e8f0" font-size="11">delay_severity</text>
+    <text x="220" y="410" fill="#fbbf24" font-size="11">ENUM(NONE..HIGH)</text>
+
+    <text x="40" y="432" fill="#ef4444" font-size="11" font-weight="bold">is_sla_breached</text>
+    <text x="220" y="432" fill="#ef4444" font-size="11">TINYINT(1) [BREACH]</text>
+
+    <text x="40" y="454" fill="#e2e8f0" font-size="11">delay_reason</text>
+    <text x="220" y="454" fill="#94a3b8" font-size="11">VARCHAR(255)</text>
+
+    <text x="40" y="476" fill="#64748b" font-size="10">created_at, updated_at</text>
+    <text x="220" y="476" fill="#64748b" font-size="10">TIMESTAMP</text>
+
+    <rect x="10" y="492" width="320" height="26" rx="4" fill="#1e293b"/>
+    <text x="20" y="509" fill="#93c5fd" font-size="10" font-mono="true">COMPOUND IDX: (status, is_delayed), (cust, status)</text>
+  </g>
+
+  <!-- ==================== TABLE: NOTIFICATIONS ==================== -->
+  <g transform="translate(480, 70)" filter="url(#glow)">
+    <rect width="340" height="160" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <path d="M 0 0 L 340 0 L 340 32 L 0 32 Z" fill="#1e293b" rx="8" />
+    <rect x="0" y="24" width="340" height="8" fill="#1e293b"/>
+    <text x="14" y="21" fill="#f8fafc" font-size="12" font-weight="bold">notifications</text>
+    <text x="245" y="21" fill="#94a3b8" font-size="10" font-mono="true">In-App Feed</text>
+    <line x1="0" y1="32" x2="340" y2="32" stroke="#475569" stroke-width="1"/>
+
+    <text x="14" y="54" fill="#38bdf8" font-size="10" font-weight="bold">PK</text>
+    <text x="40" y="54" fill="#e2e8f0" font-size="11" font-weight="600">id</text>
+    <text x="220" y="54" fill="#94a3b8" font-size="11">BIGINT UNSIGNED</text>
+
+    <text x="14" y="76" fill="#f59e0b" font-size="10" font-weight="bold">FK</text>
+    <text x="40" y="76" fill="#e2e8f0" font-size="11">user_id, shipment_id</text>
+    <text x="220" y="76" fill="#94a3b8" font-size="11">BIGINT [CASCADE]</text>
+
+    <text x="40" y="98" fill="#e2e8f0" font-size="11">title, type</text>
+    <text x="220" y="98" fill="#94a3b8" font-size="11">VARCHAR(160), VARCHAR(60)</text>
+
+    <text x="14" y="120" fill="#10b981" font-size="10" font-weight="bold">IDX</text>
+    <text x="40" y="120" fill="#e2e8f0" font-size="11">is_read, read_at</text>
+    <text x="220" y="120" fill="#94a3b8" font-size="11">TINYINT(1), DATETIME</text>
+
+    <text x="40" y="142" fill="#64748b" font-size="10">created_at, updated_at</text>
+    <text x="220" y="142" fill="#64748b" font-size="10">TIMESTAMP</text>
+  </g>
+
+  <!-- ==================== TABLE: AUDIT_LOGS ==================== -->
+  <g transform="translate(890, 70)" filter="url(#glow)">
+    <rect width="420" height="180" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <path d="M 0 0 L 420 0 L 420 32 L 0 32 Z" fill="#1e293b" rx="8" />
+    <rect x="0" y="24" width="420" height="8" fill="#1e293b"/>
+    <text x="14" y="21" fill="#f8fafc" font-size="12" font-weight="bold">audit_logs</text>
+    <text x="315" y="21" fill="#94a3b8" font-size="10" font-mono="true">Compliance Trail</text>
+    <line x1="0" y1="32" x2="420" y2="32" stroke="#475569" stroke-width="1"/>
+
+    <text x="14" y="54" fill="#38bdf8" font-size="10" font-weight="bold">PK</text>
+    <text x="40" y="54" fill="#e2e8f0" font-size="11" font-weight="600">id</text>
+    <text x="260" y="54" fill="#94a3b8" font-size="11">BIGINT UNSIGNED</text>
+
+    <text x="14" y="76" fill="#f59e0b" font-size="10" font-weight="bold">FK</text>
+    <text x="40" y="76" fill="#e2e8f0" font-size="11">user_id</text>
+    <text x="260" y="76" fill="#94a3b8" font-size="11">users(id) [SET NULL]</text>
+
+    <text x="40" y="98" fill="#e2e8f0" font-size="11">action, entity_type, entity_id</text>
+    <text x="260" y="98" fill="#94a3b8" font-size="11">VARCHAR(80), VARCHAR(100)</text>
+
+    <text x="40" y="120" fill="#e2e8f0" font-size="11">old_values, new_values</text>
+    <text x="260" y="120" fill="#38bdf8" font-size="11">JSON</text>
+
+    <text x="40" y="142" fill="#e2e8f0" font-size="11">ip_address</text>
+    <text x="260" y="142" fill="#94a3b8" font-size="11">VARCHAR(45)</text>
+
+    <text x="40" y="164" fill="#64748b" font-size="10">created_at</text>
+    <text x="260" y="164" fill="#64748b" font-size="10">TIMESTAMP (CURRENT_TIMESTAMP)</text>
+  </g>
+
+  <!-- ==================== TABLE: LOCATIONS ==================== -->
+  <g transform="translate(890, 290)" filter="url(#glow)">
+    <rect width="420" height="200" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <path d="M 0 0 L 420 0 L 420 32 L 0 32 Z" fill="#1e293b" rx="8" />
+    <rect x="0" y="24" width="420" height="8" fill="#1e293b"/>
+    <text x="14" y="21" fill="#f8fafc" font-size="12" font-weight="bold">locations</text>
+    <text x="320" y="21" fill="#94a3b8" font-size="10" font-mono="true">Global Hubs</text>
+    <line x1="0" y1="32" x2="420" y2="32" stroke="#475569" stroke-width="1"/>
+
+    <text x="14" y="54" fill="#38bdf8" font-size="10" font-weight="bold">PK</text>
+    <text x="40" y="54" fill="#e2e8f0" font-size="11" font-weight="600">id</text>
+    <text x="260" y="54" fill="#94a3b8" font-size="11">BIGINT UNSIGNED</text>
+
+    <text x="14" y="76" fill="#10b981" font-size="10" font-weight="bold">IDX</text>
+    <text x="40" y="76" fill="#e2e8f0" font-size="11">code</text>
+    <text x="260" y="76" fill="#94a3b8" font-size="11">VARCHAR(20) [PORT/HUB CODE]</text>
+
+    <text x="40" y="98" fill="#e2e8f0" font-size="11">name, city, country</text>
+    <text x="260" y="98" fill="#94a3b8" font-size="11">VARCHAR(150), (100), (100)</text>
+
+    <text x="40" y="120" fill="#e2e8f0" font-size="11">region, type</text>
+    <text x="260" y="120" fill="#94a3b8" font-size="11">VARCHAR(100), VARCHAR(30)</text>
+
+    <text x="40" y="142" fill="#e2e8f0" font-size="11" font-weight="bold">latitude, longitude</text>
+    <text x="260" y="142" fill="#38bdf8" font-size="11">DECIMAL(10,7) [GPS]</text>
+
+    <text x="40" y="164" fill="#64748b" font-size="10">created_at, updated_at</text>
+    <text x="260" y="164" fill="#64748b" font-size="10">TIMESTAMP</text>
+  </g>
+
+  <!-- ==================== TABLE: TRACKING_EVENTS ==================== -->
+  <g transform="translate(890, 520)" filter="url(#glow)">
+    <rect width="420" height="220" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <path d="M 0 0 L 420 0 L 420 32 L 0 32 Z" fill="#1e293b" rx="8" />
+    <rect x="0" y="24" width="420" height="8" fill="#1e293b"/>
+    <text x="14" y="21" fill="#f8fafc" font-size="12" font-weight="bold">tracking_events</text>
+    <text x="300" y="21" fill="#10b981" font-size="10" font-mono="true">Append-Only Log</text>
+    <line x1="0" y1="32" x2="420" y2="32" stroke="#475569" stroke-width="1"/>
+
+    <text x="14" y="54" fill="#38bdf8" font-size="10" font-weight="bold">PK</text>
+    <text x="40" y="54" fill="#e2e8f0" font-size="11" font-weight="600">id</text>
+    <text x="260" y="54" fill="#94a3b8" font-size="11">BIGINT UNSIGNED</text>
+
+    <text x="14" y="76" fill="#f59e0b" font-size="10" font-weight="bold">FK</text>
+    <text x="40" y="76" fill="#e2e8f0" font-size="11">shipment_id</text>
+    <text x="260" y="76" fill="#94a3b8" font-size="11">shipments(id) [CASCADE]</text>
+
+    <text x="14" y="98" fill="#f59e0b" font-size="10" font-weight="bold">FK</text>
+    <text x="40" y="98" fill="#e2e8f0" font-size="11">location_id, recorded_by</text>
+    <text x="260" y="98" fill="#94a3b8" font-size="11">locations(id), users(id)</text>
+
+    <text x="40" y="120" fill="#e2e8f0" font-size="11">event_status, is_exception</text>
+    <text x="260" y="120" fill="#fbbf24" font-size="11">ENUM(5 States), TINYINT(1)</text>
+
+    <text x="40" y="142" fill="#e2e8f0" font-size="11">latitude, longitude</text>
+    <text x="260" y="142" fill="#38bdf8" font-size="11">DECIMAL(10,7)</text>
+
+    <text x="14" y="164" fill="#10b981" font-size="10" font-weight="bold">IDX</text>
+    <text x="40" y="164" fill="#e2e8f0" font-size="11" font-weight="bold">occurred_at</text>
+    <text x="260" y="164" fill="#94a3b8" font-size="11">DATETIME [CHRONOLOGICAL]</text>
+
+    <text x="40" y="186" fill="#64748b" font-size="10">description, created_at</text>
+    <text x="260" y="186" fill="#64748b" font-size="10">TEXT, TIMESTAMP</text>
+  </g>
+
+  <!-- ==================== TABLE: SHIPMENT_EXCEPTIONS ==================== -->
+  <g transform="translate(480, 815)" filter="url(#glow)">
+    <rect width="420" height="145" rx="8" fill="#0f172a" stroke="#ef4444" stroke-width="1.5"/>
+    <path d="M 0 0 L 420 0 L 420 32 L 0 32 Z" fill="#7f1d1d" rx="8" />
+    <rect x="0" y="24" width="420" height="8" fill="#7f1d1d"/>
+    <text x="14" y="21" fill="#fef2f2" font-size="12" font-weight="bold">shipment_exceptions</text>
+    <text x="290" y="21" fill="#fca5a5" font-size="10" font-mono="true">Bottlenecks &amp; MTTR</text>
+    <line x1="0" y1="32" x2="420" y2="32" stroke="#991b1b" stroke-width="1"/>
+
+    <text x="14" y="54" fill="#38bdf8" font-size="10" font-weight="bold">PK</text>
+    <text x="40" y="54" fill="#e2e8f0" font-size="11" font-weight="600">id</text>
+    <text x="260" y="54" fill="#94a3b8" font-size="11">BIGINT UNSIGNED</text>
+
+    <text x="14" y="76" fill="#f59e0b" font-size="10" font-weight="bold">FK</text>
+    <text x="40" y="76" fill="#e2e8f0" font-size="11">shipment_id, reported_by</text>
+    <text x="260" y="76" fill="#94a3b8" font-size="11">shipments(id), users(id)</text>
+
+    <text x="40" y="98" fill="#e2e8f0" font-size="11">exception_type, severity</text>
+    <text x="260" y="98" fill="#fbbf24" font-size="11">ENUM(6 Types), ENUM(3)</text>
+
+    <text x="14" y="120" fill="#10b981" font-size="10" font-weight="bold">IDX</text>
+    <text x="40" y="120" fill="#e2e8f0" font-size="11">status, detected_at, resolved_at</text>
+    <text x="260" y="120" fill="#94a3b8" font-size="11">ENUM(OPEN..), DATETIME</text>
+  </g>
+</svg>
