@@ -44,8 +44,8 @@ class TrackingApiController extends Controller
         $validated = $request->validate([
             'event_status'      => 'required|string|in:CREATED,BOOKED,PICKED_UP,IN_TRANSIT,DELIVERED',
             'location_id'       => 'nullable|exists:locations,id',
-            'latitude'          => 'nullable|numeric',
-            'longitude'         => 'nullable|numeric',
+            'latitude'          => 'nullable|numeric|between:-90,90',
+            'longitude'         => 'nullable|numeric|between:-180,180',
             'description'       => 'required|string|max:500',
             'occurred_at'       => 'nullable|date',
             'estimated_arrival' => 'nullable|date',

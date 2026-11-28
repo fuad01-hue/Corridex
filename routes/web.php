@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\ArchitectureController;
 use App\Http\Controllers\Web\AuditLogController;
 use App\Http\Controllers\Web\DashboardController;
+use App\Http\Controllers\Web\LocationController;
 use App\Http\Controllers\Web\NotificationController;
 use App\Http\Controllers\Web\ShipmentController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,12 @@ Route::get('/architecture', [ArchitectureController::class, 'index'])->name('arc
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Port & Hub Autocomplete Search + On-the-Fly Geoapify Resolution
+    Route::get('/locations/search', [LocationController::class, 'search'])->name('locations.search');
+    Route::post('/locations/resolve', [LocationController::class, 'resolve'])
+        ->middleware('role:admin,operator')
+        ->name('locations.resolve');
 
     // Shipment Directory & Management
     Route::get('/shipments', [ShipmentController::class, 'index'])->name('shipments.index');

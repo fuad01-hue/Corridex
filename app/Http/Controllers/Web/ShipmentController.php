@@ -66,10 +66,33 @@ class ShipmentController extends Controller
 
         $shipments = $query->latest()->paginate(10)->withQueryString();
         $carriers  = Carrier::where('is_active', true)->orderBy('name')->get();
-        $locations = Location::orderBy('name')->get();
+        $locations = Location::orderBy('name')->limit(25)->get();
         $customers = User::where('role', 'customer')->orderBy('name')->get();
 
-        return view('shipments.index', compact('shipments', 'carriers', 'locations', 'customers'));
+        $selectedOriginFilter = $request->filled('origin_location_id')
+            ? Location::find($request->query('origin_location_id'))
+            : null;
+        $selectedDestFilter = $request->filled('destination_location_id')
+            ? Location::find($request->query('destination_location_id'))
+            : null;
+
+        $selectedBookingOrigin = old('origin_location_id')
+            ? Location::find(old('origin_location_id'))
+            : (Location::where('code', 'IDJKT')->first() ?? $locations->first());
+        $selectedBookingDest = old('destination_location_id')
+            ? Location::find(old('destination_location_id'))
+            : (Location::where('code', 'NLRTM')->first() ?? $locations->last());
+
+        return view('shipments.index', compact(
+            'shipments',
+            'carriers',
+            'locations',
+            'customers',
+            'selectedOriginFilter',
+            'selectedDestFilter',
+            'selectedBookingOrigin',
+            'selectedBookingDest'
+        ));
     }
 
     public function store(Request $request, ShipmentService $shipmentService)
@@ -83,6 +106,8 @@ class ShipmentController extends Controller
             'carrier_id'              => 'required|exists:carriers,id',
             'origin_location_id'      => 'required|exists:locations,id|different:destination_location_id',
             'destination_location_id' => 'required|exists:locations,id',
+            'latitude'                => 'nullable|numeric|between:-90,90',
+            'longitude'               => 'nullable|numeric|between:-180,180',
             'cargo_type'              => 'required|string|max:150',
             'total_weight_kg'         => 'required|numeric|min:1',
             'total_volume_cbm'        => 'required|numeric|min:0.1',
@@ -177,7 +202,10 @@ class ShipmentController extends Controller
         $weather    = $weatherService->getCurrentWeather((float) $currentLat, (float) $currentLng);
 
         $timeline  = $shipment->trackingEvents()->orderByDesc('occurred_at')->get();
-        $locations = Location::orderBy('name')->get();
+        $locations = Location::orderBy('name')->limit(25)->get();
+        $selectedTrackingLocation = old('location_id', $shipment->current_location_id)
+            ? Location::find(old('location_id', $shipment->current_location_id))
+            : null;
         $allowedNextStatuses = config("cargotrace.valid_transitions.{$shipment->current_status}", []);
 
         return view('shipments.show', compact(
@@ -186,6 +214,7 @@ class ShipmentController extends Controller
             'weather',
             'timeline',
             'locations',
+            'selectedTrackingLocation',
             'allowedNextStatuses'
         ));
     }
@@ -201,8 +230,8 @@ class ShipmentController extends Controller
         $validated = $request->validate([
             'event_status'      => 'required|string|in:CREATED,BOOKED,PICKED_UP,IN_TRANSIT,DELIVERED',
             'location_id'       => 'nullable|exists:locations,id',
-            'latitude'          => 'nullable|numeric',
-            'longitude'         => 'nullable|numeric',
+            'latitude'          => 'nullable|numeric|between:-90,90',
+            'longitude'         => 'nullable|numeric|between:-180,180',
             'description'       => 'required|string|max:500',
             'occurred_at'       => 'nullable|date',
             'estimated_arrival' => 'nullable|date',

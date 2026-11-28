@@ -68,14 +68,21 @@ class ShipmentService
                 ]);
             }
 
+            $initialLat = isset($data['latitude']) && $data['latitude'] !== null
+                ? (float) $data['latitude']
+                : $originLocation->latitude;
+            $initialLng = isset($data['longitude']) && $data['longitude'] !== null
+                ? (float) $data['longitude']
+                : $originLocation->longitude;
+
             // Create initial CREATED tracking event
             TrackingEvent::create([
                 'shipment_id'  => $shipment->id,
                 'location_id'  => $originLocation->id,
                 'recorded_by'  => $actor->id,
                 'event_status' => 'CREATED',
-                'latitude'     => $originLocation->latitude,
-                'longitude'    => $originLocation->longitude,
+                'latitude'     => $initialLat,
+                'longitude'    => $initialLng,
                 'description'  => 'Shipment booking created and cargo manifest initialized.',
                 'is_exception' => false,
                 'occurred_at'  => now(),

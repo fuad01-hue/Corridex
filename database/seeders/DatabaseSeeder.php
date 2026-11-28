@@ -11,6 +11,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(GlobalScenarioSeeder::class);
+        $this->call([
+            LocationSeeder::class,
+            GlobalScenarioSeeder::class,
+        ]);
     }
 }

@@ -68,7 +68,7 @@ class DashboardController extends Controller
                 $q->where('shipment_number', 'LIKE', '%SEA-AU%')
                   ->orWhere(function ($sub) {
                       $sub->whereHas('origin', fn ($loc) => $loc->where('region', 'Southeast Asia'))
-                          ->whereHas('destination', fn ($loc) => $loc->where('region', 'Australia'));
+                          ->whereHas('destination', fn ($loc) => $loc->whereIn('region', ['Australia', 'Oceania']));
                   });
             })
             ->get();

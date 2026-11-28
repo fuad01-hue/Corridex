@@ -84,6 +84,8 @@ class ShipmentApiController extends Controller
             'origin_location_id'      => 'required|exists:locations,id|different:destination_location_id',
             'destination_location_id' => 'required|exists:locations,id',
             'current_location_id'     => 'nullable|exists:locations,id',
+            'latitude'                => 'nullable|numeric|between:-90,90',
+            'longitude'               => 'nullable|numeric|between:-180,180',
             'cargo_type'              => 'required|string|max:150',
             'total_weight_kg'         => 'required|numeric|min:1',
             'total_volume_cbm'        => 'required|numeric|min:0.1',

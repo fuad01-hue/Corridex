@@ -81,7 +81,7 @@ class EtaService
             return config('cargotrace.corridor_thresholds.ASIA-NA', 18);
         }
 
-        if ($originRegion === 'Southeast Asia' && $destRegion === 'Australia') {
+        if ($originRegion === 'Southeast Asia' && in_array($destRegion, ['Australia', 'Oceania'], true)) {
             return config('cargotrace.corridor_thresholds.SEA-AU', 24);
         }
 

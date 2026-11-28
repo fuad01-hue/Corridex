@@ -46,22 +46,28 @@
 
             <div>
                 <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Origin Port</label>
-                <select name="origin_location_id" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-colors">
-                    <option value="">All Origin Ports</option>
-                    @foreach($locations as $loc)
-                        <option value="{{ $loc->id }}" {{ (string) request('origin_location_id') === (string) $loc->id ? 'selected' : '' }}>{{ $loc->name }}</option>
-                    @endforeach
-                </select>
+                <x-port-combobox
+                    name="origin_location_id"
+                    :initial-location="$selectedOriginFilter"
+                    :initial-options="$locations"
+                    :allow-empty="true"
+                    :allow-fallback="false"
+                    empty-label="All Origin Ports"
+                    placeholder="All Origin Ports (type to search...)"
+                />
             </div>
 
             <div>
                 <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Destination Port</label>
-                <select name="destination_location_id" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-colors">
-                    <option value="">All Destination Ports</option>
-                    @foreach($locations as $loc)
-                        <option value="{{ $loc->id }}" {{ (string) request('destination_location_id') === (string) $loc->id ? 'selected' : '' }}>{{ $loc->name }}</option>
-                    @endforeach
-                </select>
+                <x-port-combobox
+                    name="destination_location_id"
+                    :initial-location="$selectedDestFilter"
+                    :initial-options="$locations"
+                    :allow-empty="true"
+                    :allow-fallback="false"
+                    empty-label="All Destination Ports"
+                    placeholder="All Destination Ports (type to search...)"
+                />
             </div>
 
             <div>
@@ -211,31 +217,56 @@
             </div>
 
             <div>
-                <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Origin Port / Terminal</label>
-                <select name="origin_location_id" required class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-colors">
-                    @foreach($locations as $loc)
-                        <option value="{{ $loc->id }}">{{ $loc->name }} ({{ $loc->country }})</option>
-                    @endforeach
-                </select>
+                <label for="booking-origin-location-search" class="block text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Origin Port / Terminal</label>
+                <x-port-combobox
+                    id="booking-origin-location"
+                    name="origin_location_id"
+                    :initial-location="$selectedBookingOrigin"
+                    :initial-options="$locations"
+                    :allow-empty="false"
+                    :allow-fallback="true"
+                    :required="true"
+                    placeholder="Search origin port, UN/LOCODE, or city..."
+                />
             </div>
 
             <div>
-                <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Destination Port / Terminal</label>
-                <select name="destination_location_id" required class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-colors">
-                    @foreach($locations as $loc)
-                        <option value="{{ $loc->id }}" {{ $loop->last ? 'selected' : '' }}>{{ $loc->name }} ({{ $loc->country }})</option>
-                    @endforeach
-                </select>
+                <label for="booking-destination-location-search" class="block text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Destination Port / Terminal</label>
+                <x-port-combobox
+                    id="booking-destination-location"
+                    name="destination_location_id"
+                    :initial-location="$selectedBookingDest"
+                    :initial-options="$locations"
+                    :allow-empty="false"
+                    :allow-fallback="true"
+                    :required="true"
+                    placeholder="Search destination port, UN/LOCODE, or city..."
+                />
+                <p id="booking-dest-coords-preview" class="mt-1 text-[10px] font-mono text-slate-400 dark:text-slate-500"></p>
             </div>
 
             <div class="grid grid-cols-2 gap-2">
                 <div>
                     <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Weight (kg)</label>
-                    <input type="number" step="0.01" name="total_weight_kg" value="8500" required class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-colors">
+                    <input type="number" step="0.01" name="total_weight_kg" value="{{ old('total_weight_kg', 8500) }}" required class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-colors">
                 </div>
                 <div>
                     <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Volume (CBM)</label>
-                    <input type="number" step="0.01" name="total_volume_cbm" value="32" required class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-colors">
+                    <input type="number" step="0.01" name="total_volume_cbm" value="{{ old('total_volume_cbm', 32) }}" required class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-colors">
+                </div>
+            </div>
+
+            <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50/80 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-lg p-3">
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <label for="booking-origin-lat" class="block text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Initial Berth Latitude (Auto-filled)</label>
+                        <button type="button" id="booking-reset-coords" class="text-[10px] font-semibold text-blue-600 dark:text-blue-400 hover:underline">Reset to Port</button>
+                    </div>
+                    <input id="booking-origin-lat" type="number" step="0.0000001" min="-90" max="90" name="latitude" value="{{ old('latitude') }}" placeholder="e.g. -6.0938000" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg px-3 py-2 text-xs font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-colors">
+                </div>
+                <div>
+                    <label for="booking-origin-lng" class="block text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Initial Berth Longitude (Manual Override Allowed)</label>
+                    <input id="booking-origin-lng" type="number" step="0.0000001" min="-180" max="180" name="longitude" value="{{ old('longitude') }}" placeholder="e.g. 106.8878000" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg px-3 py-2 text-xs font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-colors">
                 </div>
             </div>
 
@@ -256,6 +287,69 @@
             </div>
         </form>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const bookingForm = document.querySelector('#new-shipment-form form');
+        const originHidden = document.getElementById('booking-origin-location');
+        const destHidden = document.getElementById('booking-destination-location');
+        const latInput = document.getElementById('booking-origin-lat');
+        const lngInput = document.getElementById('booking-origin-lng');
+        const destPreview = document.getElementById('booking-dest-coords-preview');
+        const resetBtn = document.getElementById('booking-reset-coords');
+
+        let currentOriginCoords = originHidden ? {
+            lat: originHidden.dataset.lat || '',
+            lng: originHidden.dataset.lng || '',
+        } : { lat: '', lng: '' };
+
+        function syncOriginCoords(force) {
+            if (!latInput || !lngInput) return;
+            if (force || (!latInput.value && !lngInput.value)) {
+                latInput.value = currentOriginCoords.lat || '';
+                lngInput.value = currentOriginCoords.lng || '';
+            }
+        }
+
+        function syncDestPreview(lat, lng, code) {
+            if (!destPreview) return;
+            if (!lat || !lng) {
+                destPreview.textContent = '';
+                return;
+            }
+            destPreview.textContent = `Target ${code || 'PORT'}: ${Number(lat).toFixed(4)}, ${Number(lng).toFixed(4)}`;
+        }
+
+        if (bookingForm) {
+            bookingForm.addEventListener('port-selected', function (event) {
+                const { fieldName, port } = event.detail || {};
+                if (fieldName === 'origin_location_id') {
+                    currentOriginCoords = port
+                        ? { lat: String(port.latitude), lng: String(port.longitude) }
+                        : { lat: '', lng: '' };
+                    syncOriginCoords(true);
+                } else if (fieldName === 'destination_location_id') {
+                    if (port) {
+                        syncDestPreview(port.latitude, port.longitude, port.code);
+                    } else {
+                        syncDestPreview('', '', '');
+                    }
+                }
+            });
+        }
+
+        syncOriginCoords(false);
+        if (destHidden) {
+            syncDestPreview(destHidden.dataset.lat, destHidden.dataset.lng, destHidden.dataset.code);
+        }
+
+        if (resetBtn) {
+            resetBtn.addEventListener('click', function () {
+                syncOriginCoords(true);
+            });
+        }
+    });
+    </script>
     @endif
 </div>
 @endsection

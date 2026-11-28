@@ -79,8 +79,8 @@ class GlobalScenarioSeeder extends Seeder
             'country'   => 'Indonesia',
             'region'    => 'Southeast Asia',
             'type'      => 'PORT',
-            'latitude'  => -6.1044000,
-            'longitude' => 106.8827000,
+            'latitude'  => -6.0938000,
+            'longitude' => 106.8878000,
         ]);
 
         $sin = Location::updateOrCreate(['code' => 'SGSIN'], [
@@ -89,8 +89,8 @@ class GlobalScenarioSeeder extends Seeder
             'country'   => 'Singapore',
             'region'    => 'Southeast Asia',
             'type'      => 'PORT',
-            'latitude'  => 1.2644000,
-            'longitude' => 103.6200000,
+            'latitude'  => 1.2550000,
+            'longitude' => 103.6210000,
         ]);
 
         $suez = Location::updateOrCreate(['code' => 'EGSUZ'], [
@@ -99,8 +99,8 @@ class GlobalScenarioSeeder extends Seeder
             'country'   => 'Egypt',
             'region'    => 'Middle East / Africa',
             'type'      => 'HUB',
-            'latitude'  => 29.9668000,
-            'longitude' => 32.5498000,
+            'latitude'  => 29.9355000,
+            'longitude' => 32.5618000,
         ]);
 
         $rtm = Location::updateOrCreate(['code' => 'NLRTM'], [
@@ -119,15 +119,15 @@ class GlobalScenarioSeeder extends Seeder
             'country'   => 'United States',
             'region'    => 'North America',
             'type'      => 'PORT',
-            'latitude'  => 33.7405000,
-            'longitude' => -118.2719000,
+            'latitude'  => 33.7292000,
+            'longitude' => -118.2620000,
         ]);
 
         $syd = Location::updateOrCreate(['code' => 'AUSYD'], [
             'name'      => 'Port Botany Sydney',
             'city'      => 'Sydney',
             'country'   => 'Australia',
-            'region'    => 'Australia',
+            'region'    => 'Oceania',
             'type'      => 'PORT',
             'latitude'  => -33.9715000,
             'longitude' => 151.2165000,

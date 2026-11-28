@@ -13,11 +13,38 @@
 
     <!-- Pre-load blocking script to prevent Flash of Unstyled Content (FOUC) -->
     <script>
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        (function () {
+            const theme = localStorage.getItem('theme') || 'dark';
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+
+        window.updateThemeIcon = function () {
+            const isDark = document.documentElement.classList.contains('dark');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            if (lightIcon && darkIcon) {
+                if (isDark) {
+                    lightIcon.classList.remove('hidden');
+                    darkIcon.classList.add('hidden');
+                } else {
+                    lightIcon.classList.add('hidden');
+                    darkIcon.classList.remove('hidden');
+                }
+            }
+        };
+
+        window.toggleTheme = function () {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark } }));
+            window.updateThemeIcon();
+        };
+
+        document.addEventListener('DOMContentLoaded', window.updateThemeIcon);
     </script>
 
     <!-- Tailwind CSS CDN with class dark mode strategy -->
@@ -73,7 +100,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-[#0B0F17] dark:text-slate-100 antialiased min-h-screen flex flex-col transition-colors duration-200">
+<body class="bg-slate-50 text-slate-900 dark:bg-[#070B12] dark:text-slate-100 antialiased min-h-screen flex flex-col transition-colors duration-200">
 @hasSection('full_viewport')
     @yield('full_viewport')
 @else
@@ -224,32 +251,5 @@
         </div>
     </footer>
 @endif
-
-    <!-- Theme Switcher Client Controller Script -->
-    <script>
-        function updateThemeIcon() {
-            const isDark = document.documentElement.classList.contains('dark');
-            const lightIcon = document.getElementById('theme-toggle-light-icon');
-            const darkIcon = document.getElementById('theme-toggle-dark-icon');
-            if (lightIcon && darkIcon) {
-                if (isDark) {
-                    lightIcon.classList.remove('hidden');
-                    darkIcon.classList.add('hidden');
-                } else {
-                    lightIcon.classList.add('hidden');
-                    darkIcon.classList.remove('hidden');
-                }
-            }
-        }
-
-        function toggleTheme() {
-            const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.theme = isDark ? 'dark' : 'light';
-            window.dispatchEvent(new Event('themeChanged'));
-            updateThemeIcon();
-        }
-
-        document.addEventListener('DOMContentLoaded', updateThemeIcon);
-    </script>
 </body>
 </html>

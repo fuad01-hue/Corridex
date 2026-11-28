@@ -231,14 +231,31 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Transit Location Hub</label>
-                        <select name="location_id" class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-colors">
-                            @foreach($locations as $loc)
-                                <option value="{{ $loc->id }}" {{ $shipment->current_location_id === $loc->id ? 'selected' : '' }}>
-                                    {{ $loc->name }} ({{ $loc->country }})
-                                </option>
-                            @endforeach
-                        </select>
+                        <label for="tracking-location-select-search" class="block text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Transit Location Hub</label>
+                        <x-port-combobox
+                            id="tracking-location-select"
+                            name="location_id"
+                            :initial-location="$selectedTrackingLocation"
+                            :initial-options="$locations"
+                            :allow-empty="true"
+                            :allow-fallback="true"
+                            empty-label="Open Waters / Custom Coordinates"
+                            placeholder="Search hub, seaport, or UN/LOCODE..."
+                        />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50/80 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-lg p-3">
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <label for="tracking-latitude" class="block text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Waypoint Latitude</label>
+                            <button type="button" id="tracking-sync-coords" class="text-[10px] font-semibold text-blue-600 dark:text-blue-400 hover:underline">Sync Port Coords</button>
+                        </div>
+                        <input id="tracking-latitude" type="number" step="0.0000001" min="-90" max="90" name="latitude" value="{{ old('latitude') }}" placeholder="Auto-filled from hub..." class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg px-3 py-2 text-xs font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-colors">
+                    </div>
+                    <div>
+                        <label for="tracking-longitude" class="block text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Waypoint Longitude (Override Allowed)</label>
+                        <input id="tracking-longitude" type="number" step="0.0000001" min="-180" max="180" name="longitude" value="{{ old('longitude') }}" placeholder="Auto-filled from hub..." class="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg px-3 py-2 text-xs font-mono focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:outline-none transition-colors">
                     </div>
                 </div>
 
@@ -427,7 +444,13 @@
     border: 1px solid #334155 !important;
 }
 .leaflet-container {
+    background-color: #f8fafc !important;
+}
+.dark .leaflet-container {
     background-color: #0b1120 !important;
+}
+.dark .leaflet-tile-pane {
+    filter: brightness(1.45) contrast(1.15) saturate(1.2);
 }
 </style>
 
@@ -723,7 +746,47 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Dynamic tile update on theme toggle without page reload
-    window.addEventListener('themeChanged', applyMapTiles);
+    window.addEventListener('theme-changed', applyMapTiles);
+
+    // 5. Auto-fill Tracking Event Coordinates from Selected Transit Location Hub
+    const trackingLocationHidden = document.getElementById('tracking-location-select');
+    const trackingLatInput = document.getElementById('tracking-latitude');
+    const trackingLngInput = document.getElementById('tracking-longitude');
+    const trackingSyncBtn = document.getElementById('tracking-sync-coords');
+    const trackingForm = trackingLocationHidden ? trackingLocationHidden.closest('form') : null;
+
+    let currentTrackingCoords = trackingLocationHidden ? {
+        lat: trackingLocationHidden.dataset.lat || '',
+        lng: trackingLocationHidden.dataset.lng || '',
+    } : { lat: '', lng: '' };
+
+    function syncTrackingCoords(force) {
+        if (!trackingLatInput || !trackingLngInput) return;
+        if (force || (!trackingLatInput.value && !trackingLngInput.value)) {
+            trackingLatInput.value = currentTrackingCoords.lat || '';
+            trackingLngInput.value = currentTrackingCoords.lng || '';
+        }
+    }
+
+    if (trackingForm) {
+        trackingForm.addEventListener('port-selected', function (event) {
+            const { fieldName, port } = event.detail || {};
+            if (fieldName === 'location_id') {
+                currentTrackingCoords = port
+                    ? { lat: String(port.latitude), lng: String(port.longitude) }
+                    : { lat: '', lng: '' };
+                syncTrackingCoords(true);
+            }
+        });
+    }
+
+    syncTrackingCoords(false);
+
+    if (trackingSyncBtn) {
+        trackingSyncBtn.addEventListener('click', function () {
+            syncTrackingCoords(true);
+        });
+    }
 });
 </script>
 @endsection

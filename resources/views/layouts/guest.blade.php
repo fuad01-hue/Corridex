@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,13 +12,22 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logo-icon.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('images/logo-icon.png') }}">
 
-    <!-- Theme Initialization Script -->
+    <!-- Pre-load blocking theme initialization script to prevent FOUC -->
     <script>
-        if (localStorage.theme === 'light') {
-            document.documentElement.classList.remove('dark');
-        } else {
-            document.documentElement.classList.add('dark');
-        }
+        (function () {
+            const theme = localStorage.getItem('theme') || 'dark';
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+
+        window.toggleTheme = function () {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark } }));
+        };
     </script>
 
     <!-- Tailwind CSS CDN -->
@@ -47,7 +56,7 @@
         }
     </script>
 </head>
-<body class="bg-[#080C14] font-sans text-slate-100 antialiased min-h-screen selection:bg-blue-600 selection:text-white flex flex-col">
+<body class="bg-slate-50 dark:bg-[#070B12] font-sans text-slate-900 dark:text-slate-100 antialiased min-h-screen selection:bg-blue-600 selection:text-white flex flex-col transition-colors duration-200">
     <!-- Ambient Background Lighting -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div class="absolute -top-48 -left-48 w-[650px] h-[650px] bg-blue-600/10 rounded-full blur-[150px]"></div>
