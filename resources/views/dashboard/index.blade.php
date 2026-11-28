@@ -405,14 +405,6 @@
                         <span x-show="activeLayer === 'esri-dark'" class="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-cyan-400"></span>
                     </button>
                     <button 
-                        @click="switchTileLayer('voyager'); open = false" 
-                        :class="activeLayer === 'voyager' ? 'text-blue-700 dark:text-cyan-400 bg-blue-50 dark:bg-slate-800' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60'"
-                        class="w-full text-left px-2.5 py-1.5 rounded-lg flex items-center justify-between"
-                    >
-                        <span>CartoDB Voyager</span>
-                        <span x-show="activeLayer === 'voyager'" class="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-cyan-400"></span>
-                    </button>
-                    <button 
                         @click="switchTileLayer('esri-streets'); open = false" 
                         :class="activeLayer === 'esri-streets' ? 'text-blue-700 dark:text-cyan-400 bg-blue-50 dark:bg-slate-800' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60'"
                         class="w-full text-left px-2.5 py-1.5 rounded-lg flex items-center justify-between"
@@ -800,7 +792,7 @@ function marineRadar() {
         sidebarExpanded: true,
         searchQuery: '',
         activeFilter: 'ALL',
-        activeLayer: document.documentElement.classList.contains('dark') ? 'esri-dark' : 'voyager',
+        activeLayer: document.documentElement.classList.contains('dark') ? 'esri-dark' : 'esri-streets',
         geoapifyKey: @json(config('services.geoapify.key', '')),
         showPolylines: true,
         isDrawerOpen: false,
@@ -866,7 +858,7 @@ function marineRadar() {
                 const isDark = e.detail && typeof e.detail.isDark === 'boolean'
                     ? e.detail.isDark
                     : document.documentElement.classList.contains('dark');
-                this.switchTileLayer(isDark ? 'esri-dark' : 'voyager');
+                this.switchTileLayer(isDark ? 'esri-dark' : 'esri-streets');
             });
         },
 
@@ -1002,13 +994,7 @@ function marineRadar() {
                     bounds: worldBounds,
                     attribution: 'Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
                 };
-            } else if (type === 'voyager' || type === 'esri-light') {
-                tileUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
-                tileOpts.subdomains = 'abcd';
-                tileOpts.noWrap = true;
-                tileOpts.bounds = worldBounds;
-                tileOpts.attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
-            } else if (type === 'esri-streets') {
+            } else if (type === 'esri-streets' || type === 'esri-light') {
                 tileUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}';
                 tileOpts.subdomains = ['server'];
                 tileOpts.noWrap = true;
